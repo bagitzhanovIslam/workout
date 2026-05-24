@@ -1,9 +1,7 @@
 from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
- 
+from routes.workouts import router as w_router
+
+
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    html_content = "<h2>Hello</h2>"
-    return HTMLResponse(content=html_content)
+app.include_router(w_router)
