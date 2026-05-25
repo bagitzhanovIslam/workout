@@ -1,7 +1,6 @@
 from fastapi import APIRouter
 from models import Workout
 
-
 router = APIRouter()
 
 
@@ -21,12 +20,14 @@ def get_workouts_by_category(workout_category: str):
             return workout
     return {"error": "Workout not found"}
 
+
 @router.get("/workouts/{workout_id}")
-def get_workout(workout_id: int):
+def get_workout_by_id(workout_id: int):
     for workout in workouts:
         if workout["id"] == workout_id:
             return workout
     return {"error": "Workout not found"}
+
 
 @router.get("/workouts/{workout_id}/total-burned")
 def get_total_burned_calories(workout_id: int):
@@ -40,7 +41,8 @@ def get_total_burned_calories(workout_id: int):
             return {"total_burned_calories": total_burned_calories}
     return {"error": "Workout not found"}
 
-# post operations
+ # post operations
+
 
 @router.post("/workouts")
 def add_workouts(workout: Workout):
@@ -50,7 +52,8 @@ def add_workouts(workout: Workout):
     return workouts
 
 
-# delete operations
+ # delete operations
+
 
 @router.delete("/workouts/{workout_id}")
 def delete_workout(workout_id: int):
