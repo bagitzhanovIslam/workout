@@ -1,5 +1,8 @@
 from fastapi import APIRouter
 from models import Workout
+from database import SessionLocal
+from db_models import WorkoutDB
+
 
 router = APIRouter()
 
@@ -8,48 +11,82 @@ workouts = []
 
 # get operations 
 
-
 @router.get("/workouts")
 def get_workouts():
-    return workouts
+    
+    db = SessionLocal()
 
-@router.get("/workouts/category/{workout_category}")
-def get_workouts_by_category(workout_category: str):
-    for workout in workouts:
-        if workout["category"] == workout_category:
-            return workout
-    return {"error": "Workout not found"}
+    workouts = db.query(WorkoutDB).all()
+
+    db.close()
+
+    return workouts
 
 
 @router.get("/workouts/{workout_id}")
 def get_workout_by_id(workout_id: int):
-    for workout in workouts:
-        if workout["id"] == workout_id:
-            return workout
-    return {"error": "Workout not found"}
+    
+    db = SessionLocal()
+    
+    workout = db.query(WorkoutDB).filter(WorkoutDB.id == workout_id).first()
+
+    db.close()
+
+    return workout
+
+@router.get("/workouts/category/{workout_category}")
+def get_workouts_by_category(workout_category: str):
+
+    db = SessionLocal()
+
+    workouts = db.query(WorkoutDB).filter(WorkoutDB.category == workout_category).all()
+
+    db.close()
+
+    return workouts
 
 
 @router.get("/workouts/{workout_id}/total-burned")
 def get_total_burned_calories(workout_id: int):
-    for workout in workouts:
-        if workout["id"] == workout_id:
-            total_burned_calories = workout["duration_minutes"] * workout["burn_calories_per_minute"]
 
-            if workout["category"] == "strength":
-                total_burned_calories *= 1.1
+    db = SessionLocal()
 
-            return {"total_burned_calories": total_burned_calories}
-    return {"error": "Workout not found"}
+    workout = db.query(WorkoutDB).filter(WorkoutDB.id == workout_id).first()
+
+    if workout is None:
+        db.close()
+        return {"error": "Workout not found"}
+    
+    total_burned_calories = workout.duration_minutes * workout.burn_calories_per_minute
+
+    if workout.category == "strength":
+        total_burned_calories *= 1.1
+    
+    db.close()
+
+    return {"total_burned_calories": total_burned_calories}
 
  # post operations
 
+@router.post("/workouts/db")
+def add_workout(workout: Workout):
 
-@router.post("/workouts")
-def add_workouts(workout: Workout):
+    db = SessionLocal()
 
-    workouts.append(workout.model_dump())
+    new_workout = WorkoutDB(
+        id = workout.id,
+        exercise_name = workout.exercise_name,
+        category = workout.category,
+        duration_minutes = workout.duration_minutes,
+        burn_calories_per_minute = workout.burn_calories_per_minute
+    )
 
-    return workouts
+    db.add(new_workout)
+    db.commit()
+    db.close()
+
+    return {"message": "Workout added to database"}
+
 
 
  # delete operations
@@ -57,12 +94,20 @@ def add_workouts(workout: Workout):
 
 @router.delete("/workouts/{workout_id}")
 def delete_workout(workout_id: int):
-    for workout in workouts:
-        if workout["id"] == workout_id:
-            workouts.remove(workout)
-            return "workout deleted"
-    return {"error": "Workout not found"}
+    
+    db = SessionLocal()
 
+    workout = db.query(WorkoutDB).filter(WorkoutDB.id == workout_id).first()
+
+    if workout is None:
+        db.close()
+        return {"error": "Workout not found"}
+    
+    db.delete(workout)
+    db.commit()
+    db.close()
+
+    return {"message": "Workout deleted"}
 
 
 # put operations
@@ -70,9 +115,22 @@ def delete_workout(workout_id: int):
 
 @router.put("/workouts/{workout_id}")
 def update_workout(workout_id: int, new_workout: Workout):
-    for index, workout in enumerate(workouts):
-        if workout["id"] == workout_id:
-            workouts[index] = new_workout.model_dump()
-            return workouts[index]
 
-    return {"error": "Workout not found"}
+    db = SessionLocal()
+
+    workout = db.query(WorkoutDB).filter(WorkoutDB.id == workout_id).first()
+
+    if workout is None:
+        db.close()
+        return {"error": "Workout not found"}
+    
+    workout.exercise_name = new_workout.exercise_name
+    workout.category = new_workout.category
+    workout.duration_minutes = new_workout.duration_minutes
+    workout.burn_calories_per_minute = new_workout.burn_calories_per_minute
+
+    db.commit()
+    db.refresh(workout)
+    db.close()
+
+    return {"message": "Workout updated"}
