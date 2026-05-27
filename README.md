@@ -71,7 +71,7 @@ Linux / macOS:
 source .venv/bin/activate
 ```
 
-# на линукс 'activate'  может меняться в зависимости от вашего терминала если у вас fish то будет activate.fish и тд.
+## Для линукс: 'activate'  может меняться в зависимости от вашего терминала если у вас fish то будет activate.fish и тд.
 
 
 Windows:
