@@ -9,3 +9,4 @@ class WorkoutDB(Base):
     category = Column(String)
     duration_minutes = Column(Integer)
     burn_calories_per_minute = Column(Integer)
+    repeats = Column(Integer)
