@@ -2,17 +2,18 @@
 
 API для ведения и отслеживания тренировок, реализованный с использованием FastAPI, SQLite и SQLAlchemy.
 
-## functions
+## Функционал
 
 - Получение списка тренировок
 - Фильтрация тренировок по категории
 - Получение тренировки по ID
 - Добавление новой тренировки
-- Обновление существующей тренировки
+- Обновление тренировки
 - Удаление тренировки
 - Расчет общего количества сожженных калорий
+- Поддержка pagination через query parameters (`limit`, `offset`)
 
-## endpoints
+## Endpoints
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -24,7 +25,7 @@ API для ведения и отслеживания тренировок, ре
 | DELETE | `/workouts/{workout_id}` | Удаление тренировки |
 | GET | `/workouts/{workout_id}/total-burned` | Расчет сожженных калорий |
 
-## stack
+## Технологии
 
 - FastAPI
 - SQLite
@@ -33,15 +34,16 @@ API для ведения и отслеживания тренировок, ре
 - Swagger / OpenAPI
 - Postman
 
-## validation
+## Валидация
 
 - `duration_minutes` > 0
 - `burn_calories_per_minute` > 0
 - `repeats` >= 0
-- Поддерживаемые категории:
-  - cardio
-  - strength
-  - stretching
+
+Поддерживаемые категории:
+- cardio
+- strength
+- stretching
 
 ## HTTP Status Codes
 
@@ -57,7 +59,7 @@ API для ведения и отслеживания тренировок, ре
 
 ## Установка и запуск
 
-Виртуального окружения:
+Создание виртуального окружения:
 
 ```bash
 python -m venv .venv
@@ -71,8 +73,11 @@ Linux / macOS:
 source .venv/bin/activate
 ```
 
-## Для линукс: 'activate'  может меняться в зависимости от вашего терминала если у вас fish то будет activate.fish и тд.
+Для Fish shell:
 
+```bash
+source .venv/bin/activate.fish
+```
 
 Windows:
 
@@ -92,12 +97,8 @@ pip install -r requirements.txt
 fastapi dev
 ```
 
-```bash
-fastapi dev
-```
-
 ## Swagger Documentation
 
 ```text
 http://127.0.0.1:8000/docs
-``` 
+```
