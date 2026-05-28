@@ -92,12 +92,12 @@ pip install -r requirements.txt
 fastapi dev
 ```
 
+```bash
+fastapi dev
+```
+
 ## Swagger Documentation
 
 ```text
 http://127.0.0.1:8000/docs
-```
-
-## Скриншот Swagger UI
-
-![Swagger](swagger.png)
+``` 
