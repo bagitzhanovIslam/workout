@@ -30,7 +30,11 @@ API для ведения и отслеживания тренировок, ре
 - FastAPI
 - SQLite
 - SQLAlchemy
+- Alembic
 - Pydantic
+- Docker
+- Ruff
+- uv
 - Swagger / OpenAPI
 - Postman
 
@@ -55,46 +59,26 @@ API для ведения и отслеживания тренировок, ре
 
 ## Требования
 
-- Python 3.14.5
+- Docker
 
-## Установка и запуск
+## Запуск через Docker
 
-Создание виртуального окружения:
+Сборка Docker image:
 
 ```bash
-python -m venv .venv
+docker build -t workout-api .
 ```
 
-Активация виртуального окружения:
-
-Linux / macOS:
+Запуск контейнера:
 
 ```bash
-source .venv/bin/activate
+docker run -p 8000:8000 workout-api
 ```
 
-Для Fish shell:
+После запуска API будет доступен по адресу:
 
-```bash
-source .venv/bin/activate.fish
-```
-
-Windows:
-
-```bash
-.venv\Scripts\activate
-```
-
-Установка зависимостей:
-
-```bash
-pip install -r requirements.txt
-```
-
-Запуск приложения:
-
-```bash
-fastapi dev
+```text
+http://127.0.0.1:8000
 ```
 
 ## Swagger Documentation

@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException
-from models import Workout, WorkoutResponse
+
 from database import SessionLocal
 from db_models import WorkoutDB
-
+from models import Workout, WorkoutResponse
 
 router = APIRouter()
 

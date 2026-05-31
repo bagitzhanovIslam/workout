@@ -1,6 +1,7 @@
 from fastapi import FastAPI
+
+from database import Base, engine
 from routes.workouts import router as w_router
-from database import engine, Base
 
 app = FastAPI()
 

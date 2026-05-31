@@ -1,0 +1,149 @@
+{
+  "info": {
+    "_postman_id": "workout-logger-api",
+    "name": "Workout Logger API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Workouts",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/workouts",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["workouts"]
+        }
+      }
+    },
+    {
+      "name": "Get Workouts With Pagination",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/workouts?limit=5&offset=0",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["workouts"],
+          "query": [
+            {
+              "key": "limit",
+              "value": "5"
+            },
+            {
+              "key": "offset",
+              "value": "0"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Workout By Id",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/workouts/1",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["workouts", "1"]
+        }
+      }
+    },
+    {
+      "name": "Get Workouts By Category",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/workouts/category/strength",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["workouts", "category", "strength"]
+        }
+      }
+    },
+    {
+      "name": "Create Workout",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 1,\n  \"exercise_name\": \"Push Ups\",\n  \"category\": \"strength\",\n  \"duration_minutes\": 20,\n  \"burn_calories_per_minute\": 8,\n  \"repeats\": 50\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/workouts",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["workouts"]
+        }
+      }
+    },
+    {
+      "name": "Update Workout",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 1,\n  \"exercise_name\": \"Pull Ups\",\n  \"category\": \"strength\",\n  \"duration_minutes\": 15,\n  \"burn_calories_per_minute\": 10,\n  \"repeats\": 30\n}"
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/workouts/1",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["workouts", "1"]
+        }
+      }
+    },
+    {
+      "name": "Delete Workout",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/workouts/1",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["workouts", "1"]
+        }
+      }
+    },
+    {
+      "name": "Get Total Burned Calories",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/workouts/1/total-burned",
+          "protocol": "http",
+          "host": ["127", "0", "0", "1"],
+          "port": "8000",
+          "path": ["workouts", "1", "total-burned"]
+        }
+      }
+    }
+  ]
+}
